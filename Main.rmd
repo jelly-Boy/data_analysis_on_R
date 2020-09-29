@@ -1,0 +1,93 @@
+---
+title: "Laba-1"
+author: "Korbenko"
+date: "20 09 2020"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, echo=TRUE}
+library("psych")
+library("dplyr")
+library("ggplot2")
+library ("GGally")
+library("faraway")
+library("graphics")
+```
+
+```{r, echo = TRUE, include=TRUE }
+c<-cars
+c_metric<-mutate(c, speed = speed*1.67, dist = dist*0.3)
+x<-c_metric$dist
+```
+
+```{r, echo = TRUE, include=TRUE}
+##средняя скорость
+mean(x)
+##медиана скорости
+median(x)
+##дисперсия скорости
+var(x)
+##стандартное отклонение скорости
+sd(x)
+##коеф вариации скорости
+sd(x)/mean(x, na.rm=TRUE)
+##коэф ассиметрии скорости
+skew(x)
+##коэф эксцесса скорости
+kurtosi(x)
+##размах вариации скорости
+range(x)
+##интерквартильный размах скорости
+IQR(x)
+```
+
+```{r, echo = TRUE, include=TRUE}
+##пятиточечная характеристика
+quantile(x)
+##дециль(1 и 9)
+dec <- quantile(x, p = seq(0.1, 1, 0.1))
+dec[1]
+dec[9]
+```
+```{r, echo=TRUE, include=TRUE}
+boxplot(speed~dist,
+        xlab = "Швидкість(км/год).",
+        ylab = "Гальмівний шлях(метри).",
+        main = "Відстань, необхідна для зупинки автомобіля 1920-х років.",
+        col = "blue",
+        data = c_metric)
+```
+```{r, echo=TRUE, include=TRUE}
+hist(x, breaks ="Sturges", freq = FALSE, col = "lightblue",
+      xlab = "Переменная X",
+      ylab = "Плотность вероятности",
+      main = "Гистограмма стандартным методом")
+lines(density(x, bw = 0.3), col = "red", lwd = 1)
+
+
+hist(x, breaks ="Scott", freq = FALSE, col = "lightblue",
+      xlab = "Переменная X",
+      ylab = "Плотность вероятности",
+      main = "Гистограмма методом Скотта")
+lines(density(x, bw = 0.5), col = "red", lwd = 1)
+
+hist(x, breaks ="FD", freq = FALSE, col = "lightblue",
+      xlab = "Переменная X",
+      ylab = "Плотность вероятности",
+      main = "Гистограмма методом ФД")
+lines(density(x, bw = 0.3), col = "red", lwd = 1)
+```
+```{r, echo=TRUE, include=TRUE}
+qqnorm(x,frame=FALSE)
+abline(0,1, col ="red")
+
+
+```
+
+
+
+
