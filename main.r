@@ -4,7 +4,6 @@ library("ggplot2")
 library ("GGally")
 library("faraway")
 library("graphics")
-l<-LakeHuron
 c <- cars
 glimpse(c)
 c_metric <- mutate(c, speed = speed*1.67, dist = dist*0.3)
@@ -71,5 +70,9 @@ hist(c_metric$speed)
 ##Normal rule
    
 ##кривая плостности 
-
-        
+m <- mean(c_metric$dist)
+s <- sd(c_metric$dist)
+n <- nrow(c_metric)
+p <- (1 : n) / n - 0.5 / n
+plot(x = p, y = sort(pnorm(c_metric$dist, m, s)))
+abline(0,1)
